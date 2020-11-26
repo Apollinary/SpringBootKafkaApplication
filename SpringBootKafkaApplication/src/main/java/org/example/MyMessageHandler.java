@@ -1,6 +1,7 @@
 package org.example;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.integration.annotation.ServiceActivator;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.messaging.Message;
@@ -9,9 +10,9 @@ import org.springframework.messaging.MessagingException;
 import org.springframework.stereotype.Component;
 
 @Component
-class MyMessageHandler implements MessageHandler {
-
-    private final String topicTo = "Topic2";
+class MyMessageHandler implements MessageHandler{
+    @Value("${kafka.topicTo}")
+    private String topicTo;
 
     private KafkaTemplate<String, String> kafkaTemplate;
 
