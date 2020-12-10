@@ -1,4 +1,4 @@
-package org.example;
+package org.example.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
