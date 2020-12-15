@@ -1,50 +1,50 @@
 package org.example.dao;
 
 import org.example.User;
-import org.springframework.context.annotation.Bean;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.stereotype.Component;
 
-import javax.sql.DataSource;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.util.List;
+import java.util.stream.Collectors;
+
 
 @Component
 public class UserJDBCTemplate implements UserDAO {
 
-    private DataSource dataSource;
-
-    private JdbcTemplate jdbcTemplateObject;
+    @Autowired
+    JdbcTemplate jdbcTemplateObject;
 
     public UserJDBCTemplate() {
-        this.setDataSource(dataSource());
     }
 
-    @Bean
-    public DataSource dataSource() {
-        DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource();
-        driverManagerDataSource.setDriverClassName("org.postgresql.Driver");
-        driverManagerDataSource.setUrl("jdbc:postgresql://localhost:5432/test");
-        driverManagerDataSource.setUsername("postgres");
-        driverManagerDataSource.setPassword("12345");
-        return driverManagerDataSource;
+    public void initDataBase() {
+        try {
+            jdbcTemplateObject.execute(new BufferedReader(new FileReader("src/main/resources/tables.sql")).lines().collect(Collectors.joining()));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
-    public void setDataSource(DataSource dataSource) {
-        this.dataSource = dataSource;
-        this.jdbcTemplateObject = new JdbcTemplate(dataSource);
-    }
-
-    @Override
-    public void addUser(String firstName, String lastName) {
-        String sqlQuery = "insert into users (firstname, lastname) values (?, ?)";
-        jdbcTemplateObject.update( sqlQuery, firstName, lastName);
+    public void addUser(String firstName, String lastName, int age) {
+        String sqlQuery = "insert into users (firstname, lastname, age) values (?, ?, ?)";
+        jdbcTemplateObject.update(sqlQuery, firstName, lastName, age);
         System.out.println("Created Record firstName = " + firstName + " lastName = " + lastName);
     }
 
     @Override
-    public User getUserByName(String firstName, String lastName) {
+    public void addMessage(long userId, String messageText, long timestamp, String device) {
+        String sqlQuery = "insert into messages (user_id, message_txt, message_timestamp, device) values (?, ?, ?, ?)";
+        jdbcTemplateObject.update(sqlQuery, userId, messageText, timestamp, device);
+    }
+
+    @Override
+    public List<User> getUserByName(String firstName, String lastName) {
         String sqlQuery = "SELECT * FROM users where firstname = ? and lastname = ?";
-        return jdbcTemplateObject.queryForObject(sqlQuery, new UserMapper(), firstName, lastName);
+        return jdbcTemplateObject.query(sqlQuery, new UserMapper(), firstName, lastName);
     }
 }

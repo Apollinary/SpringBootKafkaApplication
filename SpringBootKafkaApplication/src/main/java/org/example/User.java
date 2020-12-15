@@ -9,6 +9,8 @@ public class User {
     private String lastName;
     private int age;
     private long timestamp;
+    private String messageText;
+    private String device;
 
     public User() {
     }
@@ -55,6 +57,22 @@ public class User {
 
     public void setAge(int age) { this.age = age; }
 
+    public String getMessageText() {
+        return messageText;
+    }
+
+    public void setMessageText(String messageText) {
+        this.messageText = messageText;
+    }
+
+    public String getDevice() {
+        return device;
+    }
+
+    public void setDevice(String device) {
+        this.device = device;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -64,12 +82,14 @@ public class User {
                 timestamp == user.timestamp &&
                 Objects.equals(id, user.id) &&
                 Objects.equals(firstName, user.firstName) &&
-                Objects.equals(lastName, user.lastName);
+                Objects.equals(lastName, user.lastName) &&
+                Objects.equals(messageText, user.messageText) &&
+                Objects.equals(device, user.device);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, lastName, age, timestamp);
+        return Objects.hash(id, firstName, lastName, age, timestamp, messageText, device);
     }
 
     @Override
@@ -80,6 +100,8 @@ public class User {
                 ", lastName='" + lastName + '\'' +
                 ", age=" + age +
                 ", timestamp=" + timestamp +
+                ", messageText='" + messageText + '\'' +
+                ", device='" + device + '\'' +
                 '}';
     }
 }

@@ -2,14 +2,13 @@ package org.example.dao;
 
 import org.example.User;
 
-import java.sql.SQLException;
-import javax.sql.DataSource;
+import java.util.List;
 
 public interface UserDAO {
 
-    public void setDataSource(DataSource ds) throws SQLException;
+    public void addUser(String firstName, String lastName, int age);
 
-    public void addUser(String firstName, String lastName);
+    public void addMessage(long userId, String messageText, long timestamp, String device);
 
-    public User getUserByName(String firstName, String lastName);
+    public List<User> getUserByName(String firstName, String lastName);
 }
