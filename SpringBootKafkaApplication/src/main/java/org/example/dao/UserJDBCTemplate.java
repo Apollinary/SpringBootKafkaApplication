@@ -45,18 +45,15 @@ public class UserJDBCTemplate {
         return jdbcTemplateObject.query(sqlQuery, new UserMapper(), firstName, lastName);
     }
 
-    public List<Comment> getCommentsByUserId(long userId, String product) {
-        String sqlQuery = "SELECT * FROM comments where user_id = ? and product = ?";
-        return jdbcTemplateObject.query(sqlQuery, new CommentMapper(), userId, product);
-    }
-
     public List<Comment> getCommentsByUserName(String firstName, String lastName) {
-        String sqlQuery = "SELECT * FROM comments where user_id = (select user_id from users where firstname = ? and lastname = ?)";
+        String sqlQuery = "SELECT co.comment_id, co.user_id, us.firstname, us.lastname, co.comment_txt, co.comment_timestamp, co.product, us.age "
+                + "FROM comments co INNER JOIN users us ON co.user_id=us.user_id where us.firstname= ? and us.lastname = ?";
         return jdbcTemplateObject.query(sqlQuery, new CommentMapper(), firstName, lastName);
     }
 
     public List<Comment> getCommentsByProductName(String productName) {
-        String sqlQuery = "SELECT * FROM comments where product = ?";
+        String sqlQuery = "SELECT co.comment_id, co.user_id, us.firstname, us.lastname, co.comment_txt, co.comment_timestamp, co.product, us.age "
+                + "FROM comments co INNER JOIN users us ON co.user_id=us.user_id where co.product = ?";
         return jdbcTemplateObject.query(sqlQuery, new CommentMapper(), productName);
     }
 }

@@ -40,7 +40,7 @@ public class SampleController {
         return ResponseEntity.ok(foundComments);
     }
 
-    @RequestMapping(value = "/public/getProductComments", method = RequestMethod.GET)
+    @RequestMapping(value = "/public/getProductComments/{product}", method = RequestMethod.GET)
     public ResponseEntity<List<Comment>> getProductComments(@PathVariable("product") String productName) {
         List<Comment> foundComments = userJDBCTemplate.getCommentsByProductName(productName);
         if (foundComments == null) {
