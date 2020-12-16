@@ -1,6 +1,6 @@
 package org.example.dao;
 
-import org.example.Comment;
+import org.example.model.Comment;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;

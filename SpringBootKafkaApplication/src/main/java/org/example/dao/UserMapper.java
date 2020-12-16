@@ -1,6 +1,6 @@
 package org.example.dao;
 
-import org.example.User;
+import org.example.model.User;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;

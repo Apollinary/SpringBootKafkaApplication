@@ -1,4 +1,4 @@
-package org.example;
+package org.example.model;
 
 import java.util.Objects;
 
@@ -10,6 +10,7 @@ public class Comment {
     private String commentText;
     private long timestamp;
     private String product;
+    private int age;
 
     public Comment() {
     }
@@ -76,6 +77,14 @@ public class Comment {
         this.lastName = lastName;
     }
 
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -83,6 +92,7 @@ public class Comment {
         Comment comment = (Comment) o;
         return userId == comment.userId &&
                 timestamp == comment.timestamp &&
+                age == comment.age &&
                 Objects.equals(commentId, comment.commentId) &&
                 Objects.equals(firstName, comment.firstName) &&
                 Objects.equals(lastName, comment.lastName) &&
@@ -92,7 +102,7 @@ public class Comment {
 
     @Override
     public int hashCode() {
-        return Objects.hash(commentId, userId, firstName, lastName, commentText, timestamp, product);
+        return Objects.hash(commentId, userId, firstName, lastName, commentText, timestamp, product, age);
     }
 
     @Override
@@ -105,6 +115,7 @@ public class Comment {
                 ", commentText='" + commentText + '\'' +
                 ", timestamp=" + timestamp +
                 ", product='" + product + '\'' +
+                ", age=" + age +
                 '}';
     }
 }
