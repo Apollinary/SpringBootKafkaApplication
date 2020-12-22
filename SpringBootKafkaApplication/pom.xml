@@ -69,8 +69,17 @@
                 <version>2.5.0</version>
                 <configuration>
                     <to>
-                        <image>docker.io/apollinarii/kafka-project</image>
+                        <image>docker.io/apollinarii/spring-project</image>
                     </to>
+                    <extraDirectories>
+                        <paths>
+                            <!-- Copies from 'src/main/custom-extra-dir' into '/' on the container. -->
+                            <path>
+                                <from>src/main/resources</from>
+                                <into>/src/main/resources</into>
+                            </path>
+                        </paths>
+                    </extraDirectories>
                 </configuration>
             </plugin>
         </plugins>
